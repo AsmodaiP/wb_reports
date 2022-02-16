@@ -1,14 +1,15 @@
+import codecs
 import logging
 import os
 import sys
 from logging.handlers import RotatingFileHandler
 
+import pymorphy2
 from dotenv import load_dotenv
 from telegram.ext import (CommandHandler, ConversationHandler, Filters,
                           MessageHandler, Updater)
 
 import sheet
-import pymorphy2
 
 morph = pymorphy2.MorphAnalyzer()
 
@@ -41,7 +42,11 @@ except KeyError as exc:
 
 
 def start(bot, update):
-    bot.message.reply_text('Начало работы')
+    bot.message.reply_text(
+        codecs.open(
+            'instruction.md',
+            'r').read(),
+        parse_mode='Markdown')
 
 
 def get_and_download_file(bot, update):
@@ -80,8 +85,10 @@ def get_range(bot, update):
         sum_of_refund = result['sum']
 
         try:
-            bot.message.reply_text(f'Нет места для подстановки {len(errors_articles)} {morph.parse("артикулов")[0].make_agree_with_number(len(errors_articles)).word}')
-        except:
+            bot.message.reply_text(
+                (f'Нет места для подстановки {len(errors_articles)}'
+                 f'{morph.parse("артикулов")[0].make_agree_with_number(len(errors_articles)).word}'))
+        except Exception:
             bot.message.reply_text(
                 f'Нет места для подстановки {len(errors_articles)} артикулов')
         bot.message.reply_text("\n".join(errors_articles))
@@ -89,7 +96,9 @@ def get_range(bot, update):
     except Exception as ex:
         logging.error(ex, exc_info=ex)
         bot.message.reply_text(
-            'Что-то пошло не так. \nУбедитесь, что аккаунт service@sheets-325814.iam.gserviceaccount.com имеет доступ к редактированию таблицы, перепроверьте введенные данные и начните сначала')
+            'Что-то пошло не так. \n'
+            'Убедитесь, что аккаунт service@sheets-325814.iam.gserviceaccount.com имеет '
+            'доступ к редактированию таблицы, перепроверьте введенные данные и начните сначала')
     return ConversationHandler.END
 
 

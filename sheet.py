@@ -1,16 +1,15 @@
 '''Модуль для обновения гугл таблицы'''
 import os
-from dotenv import load_dotenv
-from googleapiclient.discovery import build
-from google.oauth2 import service_account
-import report
 
+from dotenv import load_dotenv
+from google.oauth2 import service_account
+from googleapiclient.discovery import build
+
+import report
 
 load_dotenv()
 
 TELEGRAM_TOKEN = os.environ['TELEGRAM_TOKEN']
-ID_FOR_NOTIFICATION = os.environ['ID_FOR_NOTIFICATION'].split(',')
-
 
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
@@ -57,7 +56,6 @@ def update_table(name_of_xlsx='report.xlsx', spreadsheet_id='1cNNK_IPAUt7LAevVaX
         if len(row)>2:
             try:
                 article = row[indexes['артикул']]
-                print(article)
                 data = relized[article]
                 body_data += [
                     {
