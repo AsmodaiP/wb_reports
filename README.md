@@ -58,8 +58,7 @@
 Для постоянной работы нужно выполнить
 
 ```bash
-sudo nano
-lib/systemd/system/bot.service
+sudo nano lib/systemd/system/bot.service
 ```
 
 И заполнить файл  следующим образом
@@ -72,9 +71,9 @@ After=network.target
 [Service]
 User=root
 EnviromentFile=/etc/environment
-ExecStart=путь_до_виртуального_окружения/bin/python bot.py 
-ExecReload=путь_до_виртуального_окружения/bin/python bot.py 
-WorkingDirectory=путь_до_проекта
+ExecStart=/home/asmodai/wb_reports/venv/bin/python bot.py 
+ExecReload=home/asmodai/wb_reports/venv/bin/python bot.py 
+WorkingDirectory=home/asmodai/wb_reports
 KillMode=process
 Restart=always
 RestartSec=5
@@ -90,3 +89,4 @@ WantedBy=multi-user.target
 sudo  systemctl enable bot
 sudo systemctl daemon-reload
 ```
+ 
