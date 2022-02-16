@@ -1,6 +1,7 @@
 '''Модуль для работы с файлами отчетов'''
 
 from typing import List
+
 import openpyxl
 
 
@@ -57,7 +58,8 @@ def get_unsorted_relized(name_of_xlsx='report.xlsx'):
 
     # Дла каждой строки в нужном диапазоне составляем словарь
     # при этом соответствующим колонкам указаны соответствующие индексы в base_dict_for_relized
-    # после чего добавляем эту запись в основной словарь с ключом в виде артикула
+    # после чего добавляем эту запись в основной словарь с ключом в виде
+    # артикула
 
     for row in range(start, end + 1):
         tmp = {}
@@ -112,7 +114,9 @@ def group_refunds_by_prefix_and_summ(refunds: List):
             refunds_sums[prefix] += sum_of_refund
     return refunds_sums
 
+
 def get_sum_of_refunds(name_of_xlsx='report.xlsx') -> int:
+    '''Возвращает сумму всех возвратов из файла'''
     wb = openpyxl.load_workbook(name_of_xlsx)
     ws = wb.active
     start, end = find_start_and_end_of_refund(ws)
@@ -122,10 +126,12 @@ def get_sum_of_refunds(name_of_xlsx='report.xlsx') -> int:
         s += (ws[row][8].value)
     return s
 
+
 def get_refunds_sums(name_of_xlsx='report.xlsx'):
     wb = openpyxl.load_workbook(name_of_xlsx)
     ws = wb.active
     return group_refunds_by_prefix_and_summ(get_refunds(ws))
+
 
 if __name__ == '__main__':
     print(get_sum_of_refunds('1.xlsx'))
