@@ -86,14 +86,13 @@ def get_range(bot, update):
 
         try:
             bot.message.reply_text(
-                (f'Нет места для подстановки {len(errors_articles)}'
+                (f'Нет места для подстановки {len(errors_articles)} '
                  f'{morph.parse("артикулов")[0].make_agree_with_number(len(errors_articles)).word}'))
         except Exception:
             bot.message.reply_text(
                 f'Нет места для подстановки {len(errors_articles)} артикулов')
         bot.message.reply_text("\n".join(errors_articles))
         bot.message.reply_text(f'Сумма возвратов {round(sum_of_refund,2)}')
-        raise Exception
     except Exception as ex:
         logging.error(ex, exc_info=ex)
         bot.message.reply_text(
