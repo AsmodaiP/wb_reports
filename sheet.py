@@ -80,7 +80,7 @@ def update_table(name_of_xlsx='report.xlsx', spreadsheet_id='1cNNK_IPAUt7LAevVaX
                 error_aricles.append(article)
                 i += 1
     refund_sums = report.get_sum_of_refunds(name_of_xlsx)
-    body_data += [ {'range': indexes['Возвраты'], 'values':[[refund_sums]]} ]
+    body_data += [ {'range': f'{range_name}!{indexes["Возвраты"]}', 'values':[[refund_sums]]} ]
     body = {
         'valueInputOption': 'USER_ENTERED',
         'data': body_data
@@ -91,3 +91,4 @@ def update_table(name_of_xlsx='report.xlsx', spreadsheet_id='1cNNK_IPAUt7LAevVaX
 
 if __name__ == '__main__':
     print(update_table()['sum'])
+ 
