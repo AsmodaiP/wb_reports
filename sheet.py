@@ -1,4 +1,5 @@
 '''Модуль для обновения гугл таблицы'''
+from operator import index
 import os
 
 from dotenv import load_dotenv
@@ -37,7 +38,8 @@ def update_table(name_of_xlsx='report.xlsx', spreadsheet_id='1cNNK_IPAUt7LAevVaX
     'артикул': 3,
     'продано': 7,
     'получено от клиента': 12,
-    'комиссия': 13
+    'комиссия': 13,
+    'Возвраты': 'AF2'
     }
 
 
@@ -77,11 +79,13 @@ def update_table(name_of_xlsx='report.xlsx', spreadsheet_id='1cNNK_IPAUt7LAevVaX
             except KeyError:
                 error_aricles.append(article)
                 i += 1
+    refund_sums = report.get_sum_of_refunds(name_of_xlsx)
+    body_data += [ {'range': indexes['Возвраты'], 'values':[[refund_sums]]} ]
     body = {
         'valueInputOption': 'USER_ENTERED',
         'data': body_data
     }
-    refund_sums = report.get_sum_of_refunds(name_of_xlsx)
+    
     sheet.values().batchUpdate(spreadsheetId=spreadsheet_id, body=body).execute()
     return {'errors': relized, 'sum': (refund_sums)}
 
