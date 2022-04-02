@@ -39,7 +39,7 @@ def update_table(name_of_xlsx='report.xlsx', spreadsheet_id='1cNNK_IPAUt7LAevVaX
     'продано': 7,
     'получено от клиента': 12,
     'комиссия': 13,
-    'Возвраты': 'AF2'
+    'Возвраты': 'AF3'
     }
 
 

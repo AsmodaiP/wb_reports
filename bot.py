@@ -83,15 +83,15 @@ def get_range(bot, update):
         result = sheet.update_table(name, SPREADSHEET_ID, range_from_message)
         errors_articles = result['errors']
         sum_of_refund = result['sum']
-
-        try:
-            bot.message.reply_text(
-                (f'Нет места для подстановки {len(errors_articles)} '
-                 f'{morph.parse("артикулов")[0].make_agree_with_number(len(errors_articles)).word}'))
-        except Exception:
-            bot.message.reply_text(
-                f'Нет места для подстановки {len(errors_articles)} артикулов')
-        bot.message.reply_text("\n".join(errors_articles))
+        if errors_articles:
+            try:
+                bot.message.reply_text(
+                    (f'Нет места для подстановки {len(errors_articles)} '
+                     f'{morph.parse("артикулов")[0].make_agree_with_number(len(errors_articles)).word}'))
+            except Exception:
+                bot.message.reply_text(
+                    f'Нет места для подстановки {len(errors_articles)} артикулов')
+            bot.message.reply_text("\n".join(errors_articles))
         bot.message.reply_text(f'Сумма возвратов {round(sum_of_refund,2)}')
     except Exception as ex:
         logging.error(ex, exc_info=ex)
