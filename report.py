@@ -51,11 +51,14 @@ def get_unsorted_relized(name_of_xlsx='0.xlsx'):
         'Вознаграждение Вайлдберриз без НДС': 22,
         'НДС с вознаграждения Вайлдберриз': 23,
         'К перечислению': 34,
+        'Обоснование': 29
     }
 
     relized_dicts = {}
 
     for row in worksheet.rows:
+        if 'родажа' in row[base_dict_for_relized['Обоснование']].value:
+            continue
         tmp = {}
         for key, value in base_dict_for_relized.items():
             tmp[key] = row[value].value

@@ -90,6 +90,6 @@ def update_table(name_of_xlsx='report.xlsx', spreadsheet_id='1cNNK_IPAUt7LAevVaX
     return {'errors': relized, 'sum': (0)}
 
 if __name__ == '__main__':
-    update_table('0.xlsx', '1aRUIU7NjLrCJTzCEuMxKuB6LW4Sv0P8FwTIyNcpdfy8', ))['sum']
+    update_table('0.xlsx', '1aRUIU7NjLrCJTzCEuMxKuB6LW4Sv0P8FwTIyNcpdfy8' )['sum']
     # update_table
  
