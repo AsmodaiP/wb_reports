@@ -79,17 +79,17 @@ def update_table(name_of_xlsx='report.xlsx', spreadsheet_id='1cNNK_IPAUt7LAevVaX
             except KeyError:
                 error_aricles.append(article)
                 i += 1
-    refund_sums = report.get_sum_of_refunds(name_of_xlsx)
-    body_data += [ {'range': f'{range_name}!{indexes["Возвраты"]}', 'values':[[refund_sums]]} ]
+    # refund_sums = report.get_sum_of_refunds(name_of_xlsx)
+    # body_data += [ {'range': f'{range_name}!{indexes["Возвраты"]}', 'values':[[refund_sums]]} ]
     body = {
         'valueInputOption': 'USER_ENTERED',
         'data': body_data
     }
     
-    # sheet.values().batchUpdate(spreadsheetId=spreadsheet_id, body=body).execute()
-    return {'errors': relized, 'sum': (refund_sums)}
+    sheet.values().batchUpdate(spreadsheetId=spreadsheet_id, body=body).execute()
+    return {'errors': relized, 'sum': (0)}
 
 if __name__ == '__main__':
-    print(update_table()['sum'])
+    update_table('0.xlsx', '1aRUIU7NjLrCJTzCEuMxKuB6LW4Sv0P8FwTIyNcpdfy8', ))['sum']
     # update_table
  
