@@ -86,9 +86,10 @@ def update_table(name_of_xlsx='report.xlsx', spreadsheet_id='1cNNK_IPAUt7LAevVaX
         'data': body_data
     }
     
-    sheet.values().batchUpdate(spreadsheetId=spreadsheet_id, body=body).execute()
+    # sheet.values().batchUpdate(spreadsheetId=spreadsheet_id, body=body).execute()
     return {'errors': relized, 'sum': (refund_sums)}
 
 if __name__ == '__main__':
     print(update_table()['sum'])
+    # update_table
  

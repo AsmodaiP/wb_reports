@@ -32,41 +32,51 @@ def find_start_and_end_of_refund(worksheet):
     return None
 
 
-def get_unsorted_relized(name_of_xlsx='report.xlsx'):
+def get_unsorted_relized(name_of_xlsx='0.xlsx'):
     '''Получение неотсортированного списка реализованного товара из файла'''
     workbook = openpyxl.load_workbook(name_of_xlsx)
     worksheet = workbook.active
-    start, end = (find_start_and_end_of_realize(worksheet))
+    # start, end = (find_start_and_end_of_realize(worksheet))
     relized = []
-    for row in range(start, end + 1):
-        relized.append(worksheet[row])
+    # for row in worksheet.rows:
+    #     print(row)
 
     base_dict_for_relized = {
-        'Наименование': 1,
+        'Наименование': 6,
         'Артикул': 5,
-        'Количество': 6,
-        'Скидка постоянного покупателя': 7,
-        'Вайлдберриз реализовал': 8,
-        'Возмещение расходов': 9,
-        'Вознаграждение Вайлдберриз без НДС': 10,
-        'НДС с вознаграждения Вайлдберриз': 11,
-        'К перечислению': 12,
-        'Итоговый кВВ': 13
+        'Количество': 12,
+        'Скидка постоянного покупателя': 16,
+        'Вайлдберриз реализовал': 14,
+        'Возмещение расходов': 21,
+        'Вознаграждение Вайлдберриз без НДС': 22,
+        'НДС с вознаграждения Вайлдберриз': 23,
+        'К перечислению': 34,
     }
 
     relized_dicts = {}
 
-    # Дла каждой строки в нужном диапазоне составляем словарь
-    # при этом соответствующим колонкам указаны соответствующие индексы в base_dict_for_relized
-    # после чего добавляем эту запись в основной словарь с ключом в виде
-    # артикула
-
-    for row in range(start, end + 1):
+    for row in worksheet.rows:
         tmp = {}
         for key, value in base_dict_for_relized.items():
-            tmp[key] = worksheet[row][value].value
-        relized_dicts[tmp['Артикул']] = tmp
-    return relized_dicts
+            tmp[key] = row[value].value
+        if tmp['Артикул'] not in relized_dicts.keys():
+            relized_dicts[tmp['Артикул']] = tmp
+        else:
+
+            relized_dicts[tmp['Артикул']]['Количество']+=int(tmp['Количество'])
+            relized_dicts[tmp['Артикул']]['Вайлдберриз реализовал']+=float(tmp['Вайлдберриз реализовал'])
+            relized_dicts[tmp['Артикул']]['Вознаграждение Вайлдберриз без НДС']+=float(tmp['Вознаграждение Вайлдберриз без НДС'])
+            relized_dicts[tmp['Артикул']]['НДС с вознаграждения Вайлдберриз']+=float(tmp['НДС с вознаграждения Вайлдберриз'])
+            relized_dicts[tmp['Артикул']]['К перечислению']+=float(tmp['К перечислению'])
+
+    return(relized_dicts)
+
+    # for row in range(start, end + 1):
+    #     tmp = {}
+    #     for key, value in base_dict_for_relized.items():
+    #         tmp[key] = worksheet[row][value].value
+    #     relized_dicts[tmp['Артикул']] = tmp
+    # return relized_dicts
 
 
 def dict_sort(dictionary):
@@ -134,4 +144,5 @@ def get_refunds_sums(name_of_xlsx='report.xlsx'):
 
 
 if __name__ == '__main__':
-    print(get_sum_of_refunds('1.xlsx'))
+    # print(get_sum_of_refunds('0.xlsx'))
+    get_unsorted_relized()
